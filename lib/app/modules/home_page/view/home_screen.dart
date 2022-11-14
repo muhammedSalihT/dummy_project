@@ -16,33 +16,36 @@ class HomeScreen extends StatelessWidget {
     return DefaultTabController(
       length: 4,
       child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.black,
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(30),
-            child: SizedBox(
-              height: 35,
-              child: RefractedTabBar(
-                indicatorColor: Colors.grey,
-                // tabController: homeScreenCotroller.controller,
-                tabs: homeScreenCotroller.readingTabs.map((e) {
-                  return Tab(text: e);
-                }).toList(),
+        child: GetBuilder<HomeScreenController>(builder: (homeScreenCotroller) {
+          return Scaffold(
+            backgroundColor: Colors.black,
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(30),
+              child: SizedBox(
+                height: 35,
+                child: Visibility(
+                  visible:
+                      homeScreenCotroller.selectedIndex == 3 ? true : false,
+                  child: RefractedTabBar(
+                    indicatorColor: Colors.grey,
+                    // tabController: homeScreenCotroller.controller,
+                    tabs: homeScreenCotroller.readingTabs.map((e) {
+                      return Tab(text: e);
+                    }).toList(),
+                  ),
+                ),
               ),
             ),
-          ),
-          body: RefractedTabBarView(
-              // tabController: readingController.controller,
-              tabViews: homeScreenCotroller.readingTabs.map((e) {
-            return const HomeView();
-          }).toList()),
-          bottomNavigationBar:
-              GetBuilder<HomeScreenController>(builder: (homeScreenCotroller) {
-            return RefractedBottomNavBar(
+            body: RefractedTabBarView(
+                // tabController: readingController.controller,
+                tabViews: homeScreenCotroller.readingTabs.map((e) {
+              return const HomeView();
+            }).toList()),
+            bottomNavigationBar: RefractedBottomNavBar(
               homeScreenCotroller: homeScreenCotroller,
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

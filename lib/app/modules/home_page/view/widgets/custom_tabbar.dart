@@ -1,22 +1,26 @@
+import 'package:dummy_project/app/modules/home_page/controller/home_screen_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RefractedTabBar extends StatelessWidget {
-  const RefractedTabBar({
+  RefractedTabBar({
     Key? key,
     required this.tabs,
     this.tabController,
     this.indicatorColor,
-    this.onTabTapping,
   }) : super(key: key);
 
   final List<Widget> tabs;
   final TabController? tabController;
   final Color? indicatorColor;
-  final void Function(int)? onTabTapping;
+
+  final homeController = Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
     return TabBar(
-        onTap: onTabTapping,
+        onTap: (value) {
+          homeController.onTapTabBar(value);
+        },
         labelPadding: const EdgeInsets.all(2),
         controller: tabController,
         indicator: BoxDecoration(
